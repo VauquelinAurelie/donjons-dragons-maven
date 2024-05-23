@@ -8,6 +8,12 @@ import file.game.Menu;
 public class Sort extends EquipementOffensif implements ContenuCase { // Classe Sort, héritant de EquipementOffensif
     private int niveauAttaque;
 
+    /**
+     *
+     * @param niveauAttaque
+     * @param nom
+     */
+
     // constructeur
     public Sort(int niveauAttaque, String nom) {
         super(nom, niveauAttaque, 0,"Sort");

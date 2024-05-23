@@ -1,15 +1,22 @@
 package file.game;
+import file.DataBase;
 import file.plateau.PersonnageHorsPlateauException;
 import file.plateau.Plateau;
 import file.personnages.Guerrier;
 import file.personnages.Magicien;
 import file.personnages.Personnage;
 
+import java.sql.SQLException;
 import java.util.Scanner;
 
 public class Menu {
     private Personnage personnage;
     public int nombreCase = 64;
+    private DataBase dataBase;
+
+    public Menu() {
+        this.dataBase = new DataBase();
+    }
 
     public void afficherMenu() throws PersonnageHorsPlateauException {
         Scanner scanner = new Scanner(System.in);
@@ -80,6 +87,14 @@ public class Menu {
             System.out.println("Personnage créé : ");
             System.out.println("Nom : " + personnage.getNom());
             System.out.println("Métier : " + personnage.getType());
+
+            try {
+                // Enregistrer le personnage dans la base de données
+                dataBase.createHero(personnage);
+                System.out.println("Personnage enregistré dans la base de données !");
+            } catch (SQLException e) {
+                System.out.println("Erreur lors de l'enregistrement du personnage : " + e.getMessage());
+            }
         }
 
         return personnage;

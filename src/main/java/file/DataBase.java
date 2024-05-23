@@ -1,5 +1,8 @@
 package file;
 
+import com.sun.jdi.Value;
+import file.personnages.Personnage;
+
 import java.sql.*;
 
 
@@ -11,7 +14,7 @@ public class DataBase {
 
     public DataBase() {
         this.HOSTNAME = "localhost";
-        this.DBNAME = "dongon-dragon";
+        this.DBNAME = "donjon-dragon";
         this.USERNAME = "Aurelie_vauquelin";
         this.PWD = "23Manatea";
     }
@@ -54,6 +57,31 @@ public class DataBase {
         while (res.next()) {
             System.out.println(res.getString("Nom"));
         }
+    }
+
+    public void createHero(Personnage personnage) throws SQLException {
+        String req = "INSERT INTO Hero (Type, Nom, NiveauVie, NiveauForce, Offensif, Défensif) " + "VALUES (?,?,?,?,?,?)";
+        PreparedStatement preparedStatement = getConnection().prepareStatement(req);
+        preparedStatement.setString(1, personnage.getType());
+        preparedStatement.setString(2, personnage.getNom());
+        preparedStatement.setInt(3, personnage.getNiveauVie());
+        preparedStatement.setInt(4, personnage.getForceAttaque());
+//        preparedStatement.setString(5, personnage.getOffensif().toString());
+//        preparedStatement.setString(6, personnage.getDefensif().toString());
+        if (personnage.getOffensif() != null) {
+            preparedStatement.setString(5, personnage.getOffensif().toString());
+        } else {
+            preparedStatement.setNull(5, Types.VARCHAR); // ou utiliser setString(5, null) selon le type en base de données
+        }
+
+        // Vérifier si Défensif n'est pas null avant de l'ajouter à la base de données
+        if (personnage.getDefensif() != null) {
+            preparedStatement.setString(6, personnage.getDefensif().toString());
+        } else {
+            preparedStatement.setNull(6, Types.VARCHAR); // ou utiliser setString(6, null) selon le type en base de données
+        }
+        preparedStatement.executeUpdate();
+//        ResultSet res = getConnection().createStatement(preparedStatement).executeQuery();
     }
 
 }

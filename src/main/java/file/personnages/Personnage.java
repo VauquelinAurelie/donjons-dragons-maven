@@ -1,10 +1,8 @@
 package file.personnages;
-import file.equipements.Arme;
-import file.equipements.EquipementOffensif;
-import file.equipements.Potion;
-import file.equipements.Sort;
+import file.equipements.*;
 
 public abstract class Personnage {
+
     protected String nom;
     protected String type;
     protected int niveauVie;
@@ -18,6 +16,14 @@ public abstract class Personnage {
     private Sort sort;
     protected int position;
 
+    /**
+     *
+     * @param nom
+     * @param type
+     * @param niveauVie
+     * @param forceAttaque
+     * @param defensif
+     */
     // constructeur de la class classes.personnages.Personnage
     public Personnage(String nom, String type, int niveauVie, int forceAttaque, String defensif) {
         this.nom = nom;
@@ -53,6 +59,7 @@ public abstract class Personnage {
     public EquipementOffensif getOffensif() {
         return offensif;
     }
+    public String getDefensif() { return defensif; }
 
     public int getNiveauVie() {
         return niveauVie;
